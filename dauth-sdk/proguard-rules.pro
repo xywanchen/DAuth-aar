@@ -25,6 +25,7 @@
 -keep class com.infras.dauthsdk.mpc.entity.** { *; }
 -keep class com.infras.dauthsdk.api.** { *; }
 
+-keep class com.infras.dauthsdk.wallet.ext.** { *; }
 -keep class com.twitter.** { *; }
 
 # Keep all JNI classes and their methods and fields
