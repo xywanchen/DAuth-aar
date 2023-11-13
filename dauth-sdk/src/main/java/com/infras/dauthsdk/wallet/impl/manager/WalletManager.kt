@@ -58,7 +58,6 @@ internal class WalletManager internal constructor(
     }
 
     fun clearData() {
-        DAuthLogger.i("clear data", TAG)
         walletPrefsV2.clear()
         mpcKeyStore.clear()
     }

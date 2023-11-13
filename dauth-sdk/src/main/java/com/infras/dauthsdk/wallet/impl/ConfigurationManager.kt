@@ -34,7 +34,8 @@ internal sealed class DAuthChain {
             get() = DAuthChainEnum.CHAIN_ARBITRUM_GOERLI
         override val rpcUrl: String
             //get() = "https://arbitrum-goerli.public.blastapi.io/"
-            get() = "https://special-necessary-pond.arbitrum-goerli.discover.quiknode.pro/ca7528b6087182c1c8f8457abe1e58022c09d05f/"
+//            get() = "https://special-necessary-pond.arbitrum-goerli.discover.quiknode.pro/ca7528b6087182c1c8f8457abe1e58022c09d05f/"
+            get() ="https://arb-goerli.g.alchemy.com/v2/rRKVUMG4EWPNCMN9FsdGFFwmIeXJL3vT"
         override val factoryAddress: String
             get() = "0x3feB9a9B764A54B46dB90c74001694329A90F2D5"
         override val entryPointAddress: String

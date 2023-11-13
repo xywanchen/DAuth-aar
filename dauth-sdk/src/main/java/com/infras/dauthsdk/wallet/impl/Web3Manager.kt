@@ -24,7 +24,6 @@ import com.infras.dauthsdk.mpc.entity.Web3jResponseError
 import com.infras.dauthsdk.mpc.ext.ElapsedContext
 import com.infras.dauthsdk.mpc.util.MoshiUtil
 import com.infras.dauthsdk.mpc.websocket.WebsocketManager
-import com.infras.dauthsdk.wallet.ext.digest
 import com.infras.dauthsdk.wallet.impl.manager.Managers
 import com.infras.dauthsdk.wallet.sol.EntryPoint.UserOperation
 import com.infras.dauthsdk.wallet.util.CredentialsUtil
@@ -526,9 +525,8 @@ internal class Web3Manager {
         context: ElapsedContext,
         userOperation: UserOperation,
         aaAddress: String,
-        appKeyPart: String,
     ): DAuthResult<CommitTransactionData> {
-        DAuthLogger.i("executeUserOperation useOp=$userOperation appKey=${appKeyPart.digest()}", TAG)
+        DAuthLogger.i("executeUserOperation useOp=$userOperation", TAG)
 
         val balanceResult = context.runSpending("getBalance") { rh ->
             getBalance(aaAddress).also { it.traceResult(TAG, "getBalance") }
@@ -593,11 +591,12 @@ internal class Web3Manager {
         DAuthLogger.i("toBeSignedHex=$ethMsgHashHex", TAG)
 
         val signatureData = context.runSpending("sign") { rh ->
-            if (appKeyPart.isNotEmpty()) {
+            val localSign = ConfigurationManager.innerConfig.localSign
+            if (localSign) {
                 // 本地2片签
                 DAuthJniInvoker.localSignMsg(
                     ethMsgHashHex,
-                    arrayOf(Managers.mpcKeyStore.getLocalKey(), appKeyPart)
+                    Managers.mpcKeyStore.getAllKeys().toTypedArray()
                 )!!
                     .toSignatureData()
 
